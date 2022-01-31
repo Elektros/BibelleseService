@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 31012022-1
+      author: Eugen Friesen
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+            schemaName: public
+            tableName: leser
+        - createTable:
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: bibelabschnitt
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lieblingsvers
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: labels
+                  type: varchar(20) []
+              - column:
+                  name: Leser
+                  type: varchar(50)
+                  constraints:
+                    foreignKeyName: fk_leser
+                    references: leser(name)
+            schemaName: public
+            tableName: gelesen
