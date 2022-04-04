@@ -1,9 +1,10 @@
 package com.example.LiesDieBibel.Services;
 
 import com.example.LiesDieBibel.Model.Gelesen;
-import com.example.LiesDieBibel.Model.Leser;
 import com.example.LiesDieBibel.Repository.GelesenRepository;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,22 +13,30 @@ import org.springframework.stereotype.Service;
 public class GelesenService {
 
   private final GelesenRepository gelesenRepository;
-  private final LeserService leserService;
 
-  public void saveGelesen(String bibelabschnitt, String lieblingsvers, List<String> labels, String leser) {
-    Leser lesender = leserService.findeLeser(leser);
+  public void saveGelesen(
+      String bibelabschnitt,
+      List<String> lieblingsverse,
+      List<String> versTexte,
+      List<String> labels,
+      String leser,
+      String kommentar) {
 
-    if (lesender == null) {
-      lesender = leserService.saveLeser(leser);
+    Map<String, String> lieblingsVerseMitText = new HashMap<>();
+    for (String vers : lieblingsverse) {
+      for (String versText : versTexte) {
+        lieblingsVerseMitText.put(vers, versText);
+      }
     }
 
-    Gelesen gelesen = Gelesen
-        .builder()
-        .bibelabschnitt(bibelabschnitt)
-        .lieblingsvers(lieblingsvers)
-        .labels(labels)
-        .leser(lesender)
-        .build();
+    Gelesen gelesen =
+        Gelesen.builder()
+            .text(bibelabschnitt)
+            .lieblingsvers(lieblingsVerseMitText)
+            .label(labels)
+            .leser(leser)
+            .kommentar(kommentar)
+            .build();
 
     gelesenRepository.save(gelesen);
   }

@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 31012022-1
+      author: Eugen Friesen
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: text
+                  type: varchar(200)
+              - column:
+                  name: label
+                  type: varchar(20) []
+              - column:
+                  name: leser
+                  type: varchar(20)
+              - column:
+                  name: lieblingsvers
+                  type: varchar(500) []
+              - column:
+                  name: kommentar
+                  type: varchar(1000)
+            schemaName: public
+            tableName: gelesen

@@ -1,14 +1,13 @@
 package com.example.LiesDieBibel.Model;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,16 +31,14 @@ public class Gelesen {
   private UUID id;
 
   @Column(nullable = false)
-  private String bibelabschnitt;
+  private String text;
+
+  @Column @ElementCollection private Map<String, String> lieblingsvers;
+
+  @Column @ElementCollection private List<String> label;
 
   @Column(nullable = false)
-  private String lieblingsvers;
+  private String leser;
 
-  @Column
-  @ElementCollection
-  private List<String> labels;
-
-  @JoinColumn
-  @ManyToOne
-  private Leser leser;
+  @Column private String kommentar;
 }
